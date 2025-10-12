@@ -45,7 +45,7 @@ const Home = () => {
         </View>
         <Slider
           className="w-full"
-          minimumValue={0}
+          minimumValue={0.5}
           maximumValue={2}
           value={rate}
           onValueChange={onRateChange} />
@@ -55,8 +55,8 @@ const Home = () => {
         </View>
         <Slider
           className="w-full"
-          minimumValue={0}
-          maximumValue={1}
+          minimumValue={0.5}
+          maximumValue={2}
           value={pitch}
           onValueChange={onPitchChange} />
         <View className="flex-row gap-4 mt-4">
