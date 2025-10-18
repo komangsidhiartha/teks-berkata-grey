@@ -41,24 +41,38 @@ const Home = () => {
         <Text>Playback</Text>
         <View className="flex-row justify-between">
           <Text className="pt-4 ml-4">Rate</Text>
-          <Text className="pt-4 mr-4">{rate}</Text>
+          <Text className="pt-4 mr-4">{rate.toFixed(1)}</Text>
         </View>
-        <Slider
-          className="w-full"
-          minimumValue={0.5}
-          maximumValue={2}
-          value={rate}
-          onValueChange={onRateChange} />
+        <View className="flex-row justify-center items-center mx-16">
+          <Button onPress={() => onRateChange(rate - 0.1)}>-</Button>
+          <View className="w-full">
+            <Slider
+              className="w-full"
+              minimumValue={0.5}
+              maximumValue={2}
+              step={0.1}
+              value={rate}
+              onValueChange={onRateChange} />
+          </View>
+          <Button onPress={() => onRateChange(rate + 0.1)}>+</Button>
+        </View>
         <View className="flex-row justify-between">
           <Text className="pt-4 ml-4">Pitch</Text>
-          <Text className="pt-4 mr-4">{pitch}</Text>
+          <Text className="pt-4 mr-4">{pitch.toFixed(1)}</Text>
         </View>
-        <Slider
-          className="w-full"
-          minimumValue={0.5}
-          maximumValue={2}
-          value={pitch}
-          onValueChange={onPitchChange} />
+        <View className="flex-row justify-center items-center mx-16">
+          <Button onPress={() => onPitchChange(pitch - 0.1)}>-</Button>
+          <View className="w-full">
+            <Slider
+              className="w-full"
+              minimumValue={0.5}
+              maximumValue={2}
+              step={0.1}
+              value={pitch}
+              onValueChange={onPitchChange} />
+          </View>
+          <Button onPress={() => onPitchChange(pitch + 0.1)}>+</Button>
+        </View>
         <View className="flex-row gap-4 mt-4">
           <Button onPress={onPressSpeak}>Speak</Button>
           <Button onPress={onPressStop}>Stop</Button>

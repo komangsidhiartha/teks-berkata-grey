@@ -21,11 +21,11 @@ export const useHomeViewModel = () => {
     }
 
     const onRateChange = (value: number) => {
-        setRate(value)
+        setRate(Math.max(0.5, Math.min(2.0, value)))
     }
 
     const onPitchChange = (value: number) => {
-        setPitch(value)
+        setPitch(Math.max(0.5, Math.min(2.0, value)))
     }
 
     return {
