@@ -4,22 +4,25 @@ import { Pressable, Text } from "react-native"
 interface CustomButtonProps {
     className?: string
     children: React.ReactNode
-    onPress: () => void
+    onPress?: (() => void) | null
     textClassName?: string
+    disabled?: boolean
 }
 
 const CustomButton = ({
     className,
     children,
     onPress,
-    textClassName
+    textClassName,
+    disabled
 }: CustomButtonProps) => {
     return (
         <Pressable
-            className={`py-2 px-4 rounded-full bg-blue-200 text-white ${className}`}
+            className={`py-2 px-4 rounded-full ${disabled ? 'bg-gray-200' : 'bg-blue-200'} text-white ${className}`}
             onPress={onPress}
+            disabled={disabled}
         >
-            <Text className={`text-blue-600 text-center ${textClassName}`}>
+            <Text className={`${disabled ? 'text-gray-600' : 'text-blue-600'} text-center ${textClassName}`}>
                 {children}
             </Text>
         </Pressable>

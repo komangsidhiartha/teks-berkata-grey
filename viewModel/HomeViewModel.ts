@@ -6,17 +6,25 @@ export const useHomeViewModel = () => {
     const [text, setText] = useState('')
     const [rate, setRate] = useState(1.0)
     const [pitch, setPitch] = useState(1.0)
+    const [isSpeaking, setIsSpeaking] = useState(false)
     const { language } = useLanguage()
 
     const onPressSpeak = () => {
-        speakText(text, rate, pitch, language)
+        setIsSpeaking(true)
+        speakText(text, rate, pitch, language, () => setIsSpeaking(false))
     }
 
     const onPressStop = () => {
+        initiateStopSpeaking()
+    }
+
+    const initiateStopSpeaking = () => {
         stopSpeaking()
+        setIsSpeaking(false)
     }
 
     const onPressClear = () => {
+        initiateStopSpeaking()
         setText('')
     }
 
@@ -34,6 +42,7 @@ export const useHomeViewModel = () => {
         rate,
         pitch,
         language,
+        isSpeaking,
         onPressSpeak,
         onPressStop,
         onPressClear,

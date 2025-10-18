@@ -13,6 +13,7 @@ const Home = () => {
     rate,
     pitch,
     language,
+    isSpeaking,
     onPressSpeak,
     onPressStop,
     onPressClear,
@@ -76,8 +77,8 @@ const Home = () => {
           <CustomButton className="py-1 px-6" onPress={() => onPitchChange(pitch + 0.1)}>+</CustomButton>
         </View>
         <View className="flex-row gap-4 mt-4">
-          <CustomButton onPress={onPressSpeak}>Speak</CustomButton>
-          <CustomButton onPress={onPressStop}>Stop</CustomButton>
+          <CustomButton disabled={isSpeaking} onPress={onPressSpeak}>Speak</CustomButton>
+          <CustomButton disabled={!isSpeaking} onPress={onPressStop}>Stop</CustomButton>
         </View>
       </View>
     </View>
