@@ -1,9 +1,9 @@
 import { Text, TextInput, View } from "react-native"
 import "./global.css"
-import { Button } from "@react-navigation/elements"
 import Slider from "@react-native-community/slider"
 
 import { useHomeViewModel } from "@/viewModel/HomeViewModel";
+import CustomButton from "@/components/CustomButton";
 
 const Home = () => {
 
@@ -21,7 +21,7 @@ const Home = () => {
   } = useHomeViewModel()
 
   return (
-    <View className="flex-1 p-8 bg-white" >
+    <View className="flex-1 p-4 bg-white" >
       <View className="flex-[2] p-4 flex-col gap-4 bg-white shadow-lg rounded-lg">
         <TextInput
           placeholder="Enter text to speak"
@@ -31,9 +31,11 @@ const Home = () => {
           multiline
           textAlignVertical="top"
           numberOfLines={5}
+          maxLength={4000}
         />
-        <View className="flex-row justify-end">
-          <Button onPress={onPressClear}>Clear</Button>
+        <View className="flex-row justify-between">
+          <CustomButton onPress={onPressClear}>Clear</CustomButton>
+          <Text className="text-gray-500 pr-4">{text.length} / 4000</Text>
         </View>
       </View>
 
@@ -44,7 +46,7 @@ const Home = () => {
           <Text className="pt-4 mr-4">{rate.toFixed(1)}</Text>
         </View>
         <View className="flex-row justify-center items-center mx-16">
-          <Button onPress={() => onRateChange(rate - 0.1)}>-</Button>
+          <CustomButton className="py-1 px-6" onPress={() => onRateChange(rate - 0.1)}>-</CustomButton>
           <View className="w-full">
             <Slider
               className="w-full"
@@ -54,14 +56,14 @@ const Home = () => {
               value={rate}
               onValueChange={onRateChange} />
           </View>
-          <Button onPress={() => onRateChange(rate + 0.1)}>+</Button>
+          <CustomButton className="py-1 px-6" onPress={() => onRateChange(rate + 0.1)}>+</CustomButton>
         </View>
         <View className="flex-row justify-between">
           <Text className="pt-4 ml-4">Pitch</Text>
           <Text className="pt-4 mr-4">{pitch.toFixed(1)}</Text>
         </View>
         <View className="flex-row justify-center items-center mx-16">
-          <Button onPress={() => onPitchChange(pitch - 0.1)}>-</Button>
+          <CustomButton className="py-1 px-6" onPress={() => onPitchChange(pitch - 0.1)}>-</CustomButton>
           <View className="w-full">
             <Slider
               className="w-full"
@@ -71,11 +73,11 @@ const Home = () => {
               value={pitch}
               onValueChange={onPitchChange} />
           </View>
-          <Button onPress={() => onPitchChange(pitch + 0.1)}>+</Button>
+          <CustomButton className="py-1 px-6" onPress={() => onPitchChange(pitch + 0.1)}>+</CustomButton>
         </View>
         <View className="flex-row gap-4 mt-4">
-          <Button onPress={onPressSpeak}>Speak</Button>
-          <Button onPress={onPressStop}>Stop</Button>
+          <CustomButton onPress={onPressSpeak}>Speak</CustomButton>
+          <CustomButton onPress={onPressStop}>Stop</CustomButton>
         </View>
       </View>
     </View>

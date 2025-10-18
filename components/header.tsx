@@ -1,6 +1,7 @@
-import { Button, Text, View } from "react-native"
+import { Text, View } from "react-native"
 import "../app/global.css"
 import { useLanguage } from "@/context/LanguageContext"
+import CustomButton from "./CustomButton"
 
 const Header = () => {
     const { language, setLanguage } = useLanguage()
@@ -19,7 +20,7 @@ const Header = () => {
                 </Text>
                 <Text className="text-xs text-gray-500">Offline text-to-speech using your device's voices.</Text>
             </View>
-            <Button onPress={onPressLanguage} title={title} />
+            <CustomButton onPress={onPressLanguage}>{title}</CustomButton>
         </View>
     )
 }
