@@ -1,50 +1,44 @@
-# Welcome to your Expo app 👋
+# TeksBerkata (Grey) | Project "Grey"
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+> **Context:** This repository is the React Native implementation of the **TeksBerkata Suite**, an R&D benchmarking initiative where the same "0-to-1" product is implemented in parallel using different mobile stacks:
+> * 🟦 **Blue:** Flutter
+> * 🟩 **Green:** Native Android (Kotlin + Jetpack Compose)
+> * 🟥 **Red:** Native iOS (Swift + SwiftUI)
+> * ⬜ **Grey:** React Native (Expo + Fabric) [THIS REPO]
 
-## Get started
+## 🎯 Architecture & Goals
+This project serves as a testbed for the **New React Native Architecture** (Fabric/TurboModules) and modern Expo capabilities.
 
-1. Install dependencies
+**Key Technical Decisions:**
+* **Bleeding Edge:** Running **React 19.1.0** on **React Native 0.81.4**.
+* **Framework:** **Expo SDK 54**.
+* **Storage:** **MMKV (v3)** running on the **Nitro Engine** for synchronous, high-performance JSI reads.
+* **State Management:** **Zustand** with persistent middleware (linked to MMKV).
+* **Native Strategy:** Uses **CNG (Continuous Native Generation)** via `npx expo prebuild`. No native `android/` or `ios/` folders are committed to source control to maintain a clean, upgrade-safe repository.
 
-   ```bash
-   npm install
-   ```
+## 🛠 Tech Stack
+* **Routing:** `expo-router` (v6) - File-based routing.
+* **Styling:** `nativewind` (v4) - Tailwind CSS for Native.
+* **Performance:** `react-native-mmkv` + `react-native-nitro-modules`.
+* **Haptics:** `expo-haptics`.
 
-2. Start the app
+## 🚀 Getting Started & Building
 
-   ```bash
-   npx expo start
-   ```
+⚠️ **IMPORTANT:** This project uses custom C++ TurboModules (Nitro/MMKV). **It will NOT run in the standard Expo Go app.** You must build a Development Client.
 
-In the output, you'll find options to open the app in a
+### 1. Install Dependencies
+`npm install`
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### 2. Run on Emulator/Device (Development Build)
+This command handles the Prebuild (CNG) and compiles the native binaries:
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+`npx expo run:android`
 
-## Get a fresh project
+`# For iOS (Mac only)`
+`npx expo run:ios`
 
-When you're ready, run:
+### 3. Architecture Highlights
+* **Store Configuration:** Check `store/useSettingsStore.ts` to see the **Synchronous JSI Adapter** implementation connecting Zustand to MMKV via Nitro.
 
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
+*Maintained by Komang Sidhi Artha*
