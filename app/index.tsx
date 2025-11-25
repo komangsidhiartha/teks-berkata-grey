@@ -10,9 +10,8 @@ const Home = () => {
   const {
     text,
     setText,
-    rate,
+    speechRate,
     pitch,
-    language,
     isSpeaking,
     onPressSpeak,
     onPressStop,
@@ -44,20 +43,20 @@ const Home = () => {
         <Text>Playback</Text>
         <View className="flex-row justify-between">
           <Text className="pt-4 ml-4">Rate</Text>
-          <Text className="pt-4 mr-4">{rate.toFixed(1)}</Text>
+          <Text className="pt-4 mr-4">{speechRate.toFixed(1)}</Text>
         </View>
         <View className="flex-row justify-center items-center mx-16">
-          <CustomButton className="py-1 px-6" onPress={() => onRateChange(rate - 0.1)}>-</CustomButton>
+          <CustomButton className="py-1 px-6" onPress={() => onRateChange(speechRate - 0.1)}>-</CustomButton>
           <View className="w-full">
             <Slider
               className="w-full"
               minimumValue={0.5}
               maximumValue={2}
               step={0.1}
-              value={rate}
+              value={speechRate}
               onValueChange={onRateChange} />
           </View>
-          <CustomButton className="py-1 px-6" onPress={() => onRateChange(rate + 0.1)}>+</CustomButton>
+          <CustomButton className="py-1 px-6" onPress={() => onRateChange(speechRate + 0.1)}>+</CustomButton>
         </View>
         <View className="flex-row justify-between">
           <Text className="pt-4 ml-4">Pitch</Text>

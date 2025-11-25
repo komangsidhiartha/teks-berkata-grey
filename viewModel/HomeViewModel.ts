@@ -1,17 +1,17 @@
 import { useLanguage } from "@/context/LanguageContext"
 import { useState } from "react"
 import { speakText, stopSpeaking } from "@/utils/TtsHelper"
+import { useSettingsStore } from "@/store/useSettingsStore"
 
 export const useHomeViewModel = () => {
+    const { speechRate, pitch, setSpeechRate, setPitch } = useSettingsStore();
     const [text, setText] = useState('')
-    const [rate, setRate] = useState(1.0)
-    const [pitch, setPitch] = useState(1.0)
     const [isSpeaking, setIsSpeaking] = useState(false)
     const { language } = useLanguage()
 
     const onPressSpeak = () => {
         setIsSpeaking(true)
-        speakText(text, rate, pitch, language, () => setIsSpeaking(false))
+        speakText(text, speechRate, pitch, language, () => setIsSpeaking(false))
     }
 
     const onPressStop = () => {
@@ -29,17 +29,19 @@ export const useHomeViewModel = () => {
     }
 
     const onRateChange = (value: number) => {
-        setRate(Math.max(0.5, Math.min(2.0, value)))
+        const newRate = Math.max(0.5, Math.min(2.0, value));
+        setSpeechRate(newRate);
     }
 
     const onPitchChange = (value: number) => {
-        setPitch(Math.max(0.5, Math.min(2.0, value)))
+        const newPitch = Math.max(0.5, Math.min(2.0, value));
+        setPitch(newPitch);
     }
 
     return {
         text,
         setText,
-        rate,
+        speechRate,
         pitch,
         language,
         isSpeaking,
