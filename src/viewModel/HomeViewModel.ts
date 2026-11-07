@@ -3,10 +3,15 @@ import { useLanguage } from '@/context/LanguageContext';
 import { speakText, stopSpeaking } from '@/utils/TtsHelper';
 import { useSettingsStore } from '@/store/useSettingsStore';
 
-export const useHomeViewModel = () => {
+export interface UseHomeViewModelOptions {
+  onError?: (error: Error) => void;
+}
+
+export const useHomeViewModel = (options?: UseHomeViewModelOptions) => {
   const { speechRate, pitch, setSpeechRate, setPitch } = useSettingsStore();
   const [text, setText] = useState('');
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
   const { language } = useLanguage();
 
   const initiateStopSpeaking = useCallback(() => {
@@ -17,10 +22,22 @@ export const useHomeViewModel = () => {
   const onPressSpeak = useCallback(() => {
     if (!text.trim()) return;
     setIsSpeaking(true);
-    speakText(text, speechRate, pitch, language, () => {
-      setIsSpeaking(false);
-    });
-  }, [text, speechRate, pitch, language]);
+    setError(null);
+    speakText(
+      text,
+      speechRate,
+      pitch,
+      language,
+      () => {
+        setIsSpeaking(false);
+      },
+      (err) => {
+        setIsSpeaking(false);
+        setError(err);
+        options?.onError?.(err);
+      }
+    );
+  }, [text, speechRate, pitch, language, options]);
 
   const onPressStop = useCallback(() => {
     initiateStopSpeaking();
@@ -29,6 +46,7 @@ export const useHomeViewModel = () => {
   const onPressClear = useCallback(() => {
     initiateStopSpeaking();
     setText('');
+    setError(null);
   }, [initiateStopSpeaking]);
 
   const onRateChange = useCallback((value: number) => {
@@ -41,6 +59,10 @@ export const useHomeViewModel = () => {
     setPitch(newPitch);
   }, [setPitch]);
 
+  const clearError = useCallback(() => {
+    setError(null);
+  }, []);
+
   return {
     text,
     setText,
@@ -48,6 +70,8 @@ export const useHomeViewModel = () => {
     pitch,
     language,
     isSpeaking,
+    error,
+    clearError,
     onPressSpeak,
     onPressStop,
     onPressClear,

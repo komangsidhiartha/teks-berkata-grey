@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   View,
   Text,
@@ -10,6 +10,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   ScrollView,
+  Alert,
 } from 'react-native';
 import { Slider } from '@expo/ui/community/slider';
 
@@ -17,6 +18,16 @@ import { useHomeViewModel } from '@/viewModel/HomeViewModel';
 import { CustomButton } from '@/components/CustomButton';
 
 export default function HomeScreen() {
+  const handleTtsError = useCallback((error: Error) => {
+    if (Platform.OS === 'android' && error.message.includes('VOICE_MISSING')) {
+      Alert.alert(
+        'Suara Bahasa Indonesia Belum Terpasang',
+        'Paket suara Bahasa Indonesia belum terunduh di perangkat Android ini.\n\nBuka Pengaturan Android > Bahasa & Input / Keluaran Text-to-speech > Pengaturan Google TTS > Instal data suara, lalu unduh Bahasa Indonesia.',
+        [{ text: 'OK' }]
+      );
+    }
+  }, []);
+
   const {
     text,
     setText,
@@ -28,7 +39,7 @@ export default function HomeScreen() {
     onPressClear,
     onRateChange,
     onPitchChange,
-  } = useHomeViewModel();
+  } = useHomeViewModel({ onError: handleTtsError });
 
   const handleSpeak = () => {
     Keyboard.dismiss();
